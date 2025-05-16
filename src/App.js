@@ -1,25 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+export default function App() {
+  const [step, setStep] = useState(1);
+  const [count, setCount] = useState(0);
 
-function App() {
+  const date = new Date();
+  date.setDate(date.getDate() + count);
+  function addStep() {
+    setStep((s) => s + 1);
+  }
+
+  function removeStep() {
+    setStep((s) => s - 1);
+  }
+
+  function addCount() {
+    setCount((c) => c + step);
+  }
+  function removeCount() {
+    setCount((c) => c - step);
+  }
+
+  function reset() {
+    setStep(1);
+    setCount(0);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="app">
+      <div className="steps">
+        <button onClick={removeStep}>-</button>
+        <p>Step: {step} </p>
+        <button onClick={addStep}>+</button>
+      </div>
+      <div className="counter">
+        <button onClick={removeCount}>-</button>
+        <p>Count: {count}</p>
+        <button onClick={addCount}>+</button>
+      </div>
+      <div className="Date">
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <span>
+            {count === 0
+            ? "Today is "
+          : count > 0
+          ? `${count} days from today is `
+        : `${Math.abs(count)} days ago was `}
+          </span>
+          <span>
+            {date.toDateString()}
+          </span>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </div>
+      <div style={{ textAlign: "center", marginTop: "1rem" }}>
+        <button onClick={reset}>Reset</button>
+      </div>
     </div>
   );
 }
-
-export default App;
